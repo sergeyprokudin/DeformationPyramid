@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
         for c_iter in tqdm(range(num_iter)):
 
-            inputs = c_loader_iter.next()
+            inputs = next(c_loader_iter)
 
 
             for k, v in inputs.items():
