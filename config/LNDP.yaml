@@ -1,58 +1,25 @@
-gpu_mode: True
-deformation_model: NDP
+matcher_config: 'correspondence/configs/lepard.yaml'
+matcher_weights: 'correspondence/pretrained/lepard_weights.pth'
+
+outlier_rejection_config: 'correspondence/configs/outlier_rejection.yaml'
+outlier_rejection_weights: 'correspondence/pretrained/outlier_weights.pth'
 
 
-use_ldmk: True
-ldmk_config: "./correspondence/configs/correspondence.yaml"
+mode: test
+gpu_mode:  True
 
-num_workers: 4
+exp_dir: None
+
+
+#dataset:
+dataset: 4dmatch
+folder: deploy
 batch_size: 1
-augment_noise: False
-
-
-use_depth: False
-
-w_ldmk: 1
-w_cd: &w_cd 0.0
-w_reg: &w_reg 0.0
-
-trunc_cd : 0.25
-
-
-
-# motion representation
-motion_type : &motion_type  "SE3" # option  [ "Sim3", "SE3", "sflow"]
-rotation_format : &rotation_format  "axis_angle" # options [ "6D", "quaternion", "axis_angle", "euler"]
-
-#optimization
-iters: &iters 500
-lr: 0.01
-momentum: 0.9
-weight_decay: 0.0001
-max_break_count: 15
-break_threshold_ratio: 0.001
-
-
-# threshold of inlier match
-inlier_thr : &inlier_thr 0.3
-reject_outliers: &reject_outliers True
-
-samples: &samples 2000
-
-#pyramid configuration
-m : &m 10
-k0 : &k0 -8
-depth: &depth 3
-width: &width 128
-act_fn: relu
-
-
-
-
-#dataset
-data_root : "data/split/"
-split: { 'test': "4DMatch-F" }
-
-#experiment
-exp_dir :  !join [ *inlier_thr  ]
-folder: confidence_ab
+num_workers: 1
+augment_noise: 0.002
+data_root: /content/DeformationPyramid/data/4DMatch
+split: {
+  "train": split/train,
+  "val": split/4DLoMatch,
+  "test": split/4DMatch-F
+}
