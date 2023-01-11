@@ -41,9 +41,9 @@ class _4DMatch(Dataset):
 
 
     def read_entries (self, split, data_root, d_slice=None, shuffle= False):
-        entries = glob.glob(os.path.join(data_root, split, "*/*.npz"))
-        if shuffle:
-            random.shuffle(entries)
+        entries = sorted(glob.glob(os.path.join(data_root, split, "*/*.npz")))
+        #if shuffle:
+        #    random.shuffle(entries)
         if d_slice:
             return entries[:d_slice]
         return entries
@@ -151,6 +151,3 @@ class _4DMatch(Dataset):
 
         #R * ( Ps + flow ) + t  = Pt
         return src_pcd, tgt_pcd, src_feats, tgt_feats, correspondences, rot, trans, s2t_flow, metric_index, depth_paths, cam_intrin
-
-
-
